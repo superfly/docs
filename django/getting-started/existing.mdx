@@ -108,6 +108,8 @@ The [Dockerfile](https://docs.docker.com/engine/reference/builder/) is essential
 
 The [`fly.toml`](/reference/configuration) file is used by Fly.io to configure applications for deployment. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here.
 
+To run Celery workers next to your web process, with Redis as the broker, see [Background job queues](/blueprints/work-queues).
+
 ## ALLOWED_HOSTS & CSRF\_TRUSTED_ORIGINS {#allowedhosts-amp-csrf_trustedorigins}
 The dedicated URL for your deployment will be `<app_name>.fly.dev`. Update the [ALLOWED_HOSTS](https://docs.djangoproject.com/en/stable/ref/settings/#allowed-hosts) and [CSRF\_TRUSTED\_ORIGINS](https://docs.djangoproject.com/en/stable/ref/settings/#csrf-trusted-origins) configurations with your `<app_name>` to include it.
 
