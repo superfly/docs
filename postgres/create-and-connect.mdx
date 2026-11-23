@@ -46,11 +46,19 @@ fly mpg create
 fly mpg create [flags]
 ```
 ```out out
- -n, --name string       The name of your Postgres cluster
- -o, --org string        The target Fly.io organization
-      --plan string       The plan to use for the Postgres cluster (basic, launch, scale)
- -r, --region string     The target region
-      --volume-size int   Initial volume size in GB (default 10)
+      --enable-postgis-support   Enable PostGIS for the Postgres cluster
+  -n, --name string              The name of your Postgres cluster
+  -o, --org string               The target Fly.io organization
+      --pg-major-version int     The major version of Postgres to use for
+                                 the Postgres cluster. Supported versions
+                                 are 16, 17 and 18. (default 17)
+      --plan string              The plan to use for the Postgres
+                                 cluster: Dev-256, Basic, Starter,
+                                 Launch, Scale, Performance
+  -r, --region string            The target region (see 'flyctl platform
+                                 regions')
+      --volume-size int          Initial volume size in GB. Defaults to
+                                 the plan's size.
 ```
 </CodeGroup>
 

@@ -17,7 +17,7 @@ description: "Run a small, highly available Managed Postgres cluster for $4 a mo
 
 ## Pricing
 
-The Developer plan costs **\$4 a month**, including storage. It's billed by the second while the cluster exists, including the time it's paused, so a cluster you delete partway through the month costs less.
+The Developer plan costs **\$4 for 30 days**, including storage, billed by the second like every Managed Postgres plan. You're billed while the cluster exists, including the time it's paused, so a cluster you delete partway through the month costs less.
 
 The Developer plan is included in the [Free plan](/about/free-plan). A Free plan organization can have one Developer plan cluster, and its cost counts toward the \$5 of monthly usage.
 
@@ -56,7 +56,7 @@ When a client connects, the cluster wakes. This usually takes about 15 seconds, 
 
 ## Storage limit
 
-Your cluster starts with 1GB of storage and grows automatically, up to 5GB.
+Your cluster starts with 1GB of storage and grows automatically, 1GB at a time, up to 5GB.
 
 The 5GB holds your data and Postgres's write-ahead log (WAL), so your data runs out of room before it reaches 5GB.
 
@@ -72,15 +72,30 @@ With flyctl:
 fly mpg create --plan dev-256
 ```
 
+You need flyctl v0.5.15 or later. Run `fly version upgrade` if your flyctl doesn't list the Developer plan.
+
 Your cluster gets a 1GB volume by default.
 
 ## Connect to your cluster
 
-Use the `DATABASE_URL` that [`fly mpg attach`](/postgres/create-and-connect) sets on your app. On the Developer plan, it's the cluster's direct URL, which connects straight to Postgres.
+Attach your app to the cluster:
+
+```bash
+fly mpg attach <cluster-id> -a <app-name>
+```
+
+This sets a `DATABASE_URL` secret on your app. On the Developer plan, it's the cluster's direct URL, which connects straight to Postgres. If your app already has a `DATABASE_URL` secret, choose another name with `--variable-name`. See [`fly mpg attach`](/flyctl/cmd/fly_mpg_attach).
 
 You don't need PgBouncer settings, such as disabling prepared statements for transaction mode. Keep your app's connection pool small, since all your clients share the 20 connections.
 
-The direct URL keeps working if you upgrade to a larger plan. To use PgBouncer after an upgrade, switch your app to the pooled URL. See [Connect your client](/postgres/client-configuration).
+The direct URL keeps working if you upgrade to a larger plan. To use PgBouncer after an upgrade, attach again to get the pooled URL:
+
+```bash
+fly secrets unset DATABASE_URL -a <app-name>
+fly mpg attach <cluster-id> -a <app-name>
+```
+
+See [Connect your client](/postgres/client-configuration).
 
 ## Upgrade to a larger plan
 
