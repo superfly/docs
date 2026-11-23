@@ -4,6 +4,8 @@ source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_maintenance-window_show
 ---
 
 Show the weekly maintenance window of a Managed Postgres cluster.
+Some clusters have no window: their maintenance can run at any time. For them
+it prints that, or null with --json.
 
 ## Usage
 ```
