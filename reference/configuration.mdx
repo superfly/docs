@@ -1208,7 +1208,7 @@ The `files` section lets you place files inside your Machine at deploy time. Thi
 Each `[[files]]` entry requires a `guest_path` and exactly one source (`raw_value`, `local_path`, or `secret_name`):
 
 * `guest_path`: The absolute path where the file will be created inside the Machine (e.g., `/app/config.yaml`). This should match wherever your app expects to find the file. To find your app's working directory, check the `WORKDIR` in your Dockerfile.
-* `raw_value`: Inline file content, base64 encoded. You can encode a value with `base64 < file.txt` on macOS/Linux, or `[Convert]::ToBase64String([IO.File]::ReadAllBytes("file.txt"))` in PowerShell.
+* `raw_value`: Inline file content, as plain text. flyctl base64 encodes it for you, so don't encode it yourself, or the file will contain the base64 text.
 * `local_path`: Path to a file on your local machine (where you run `fly deploy`), relative to the `fly.toml` directory or as an absolute path. The file content does not need to be base64 encoded.
 * `secret_name`: The name of an app secret set with [`fly secrets set`](/flyctl/cmd/fly_secrets_set). The secret value must be base64 encoded before being set (e.g., `fly secrets set SUPER_SECRET=$(base64 < secret.txt)`).
 
@@ -1224,15 +1224,15 @@ Place a config file from your project into the Machine:
 
 For example, if your project contains `config/production.yaml`, this will copy its content to `/app/config.yaml` inside the Machine on each deploy.
 
-Inline a small file using base64-encoded content:
+Inline a small file:
 
 ```toml
 [[files]]
   guest_path = "/app/hello.txt"
-  raw_value = "aGVsbG8gd29ybGQK"
+  raw_value = "hello world\n"
 ```
 
-The value `aGVsbG8gd29ybGQK` is the base64 encoding of `hello world\n`. This creates `/app/hello.txt` containing `hello world`.
+This creates `/app/hello.txt` containing `hello world`.
 
 Write a secret to a file:
 
