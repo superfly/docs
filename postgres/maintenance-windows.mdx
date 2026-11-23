@@ -7,13 +7,13 @@ description: Choose when Fly.io runs routine maintenance on your Managed Postgre
 
 ## What's a maintenance window?
 
-Every Managed Postgres cluster has one maintenance window each week. The window has a day, a start time and a length. Routine maintenance that we schedule for your cluster only starts inside this window. That includes updating Postgres and the software that runs alongside it, and applying configuration changes.
+Every Managed Postgres cluster, except those on the [Developer plan](/postgres/developer-plan#maintenance), has one maintenance window each week. The window has a day, a start time and a length. Routine maintenance that we schedule for your cluster only starts inside this window. That includes updating Postgres and the software that runs alongside it, and applying configuration changes.
 
 Pick a time when a short interruption won't bother anyone. Some things don't wait for the window. See [What can happen outside the window](#what-can-happen-outside-the-window).
 
 ## The default window
 
-New clusters start with this window:
+New clusters, except Developer plan clusters, start with this window:
 
 - **Day:** Sunday
 - **Start:** 1:00 AM
@@ -67,6 +67,8 @@ To see the current window, run:
 fly mpg maintenance-window show <cluster-id>
 ```
 
+On a [Developer plan](/postgres/developer-plan#maintenance) cluster, it reports that maintenance can run at any time, since Developer clusters don't have a window.
+
 To change it, pass any of `--day`, `--start-hour` and `--duration`:
 
 ```bash
@@ -85,7 +87,7 @@ Either way, the new window takes effect right away. That includes maintenance th
 | Start time | Any whole hour, 12:00 AM to 11:00 PM |
 | Duration | 3 to 8 hours, in whole hours |
 
-**Note**: You can't set the window when you create a cluster. New clusters always start with the default window, and you can change it after the cluster is created.
+**Note**: You can't set the window when you create a cluster. New clusters, except Developer plan clusters, always start with the default window, and you can change it after the cluster is created.
 
 ## What happens during maintenance
 

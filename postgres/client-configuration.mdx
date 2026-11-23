@@ -15,6 +15,8 @@ After [creating your MPG cluster](/postgres/create-and-connect) and attaching yo
 - **Pooled URL** (default): `postgresql://fly-user:YOUR_PASSWORD@pgbouncer.YOUR_CLUSTER.flympg.net/fly-db` — routes through PgBouncer. Use this for your application.
 - **Direct URL**: `postgresql://fly-user:YOUR_PASSWORD@direct.YOUR_CLUSTER.flympg.net/fly-db` — bypasses PgBouncer. Use this for migrations, advisory locks, or `LISTEN/NOTIFY`.
 
+On the [Developer plan](/postgres/developer-plan), there's no PgBouncer. Use the direct URL, which `fly mpg attach` sets for you.
+
 SSL is enabled by default on all MPG connections. You do not need to set `sslmode` in your connection string.
 
 **2. Set connection lifetime and idle timeout in your code.** These are settings you configure in your application's database client or connection pool library — not on the database or cluster side. Not all client libraries support these settings directly — see the [language-specific examples](#language-specific-configuration) below.
@@ -54,7 +56,7 @@ The fix is straightforward: configure your connection pool to **proactively recy
 
 ## PgBouncer mode and your client
 
-All MPG clusters include PgBouncer for connection pooling. The pool mode you choose on the cluster side affects what your client can do. See [Cluster Configuration](/postgres/cluster-configuration) for how to change modes.
+All MPG clusters except those on the [Developer plan](/postgres/developer-plan) include PgBouncer for connection pooling. The pool mode you choose on the cluster side affects what your client can do. See [Cluster Configuration](/postgres/cluster-configuration) for how to change modes.
 
 **Session mode** (default): A PgBouncer connection is held for the entire client session. Full PostgreSQL feature compatibility — prepared statements, advisory locks, `LISTEN/NOTIFY`, and multi-statement transactions all work normally. Lower connection reuse.
 
@@ -256,6 +258,8 @@ Each MPG plan has a fixed number of PgBouncer connection slots shared across all
 | Launch | 500 | 150 | 30 |
 | Scale | 1000 | 300 | 50 |
 | Performance | 1000 | 300 | 50 |
+
+The Developer plan has no PgBouncer. It allows up to 20 connections straight to Postgres, shared by all your clients.
 
 **Max client connections** is the total number of client connections PgBouncer will accept. **Max database connections** is the number of actual connections PgBouncer opens to PostgreSQL. The reserve pool handles bursts above the normal pool size.
 

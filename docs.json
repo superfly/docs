@@ -630,6 +630,7 @@
                     "group": "Getting Started",
                     "pages": [
                       "postgres/create-and-connect",
+                      "postgres/developer-plan",
                       "postgres/client-configuration",
                       "postgres/cluster-configuration"
                     ]
