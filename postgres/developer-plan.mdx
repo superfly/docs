@@ -95,6 +95,8 @@ fly secrets unset DATABASE_URL -a <app-name>
 fly mpg attach <cluster-id> -a <app-name>
 ```
 
+The pooled URL uses PgBouncer in transaction mode. If your app uses prepared statements, `SET`, advisory locks or `LISTEN/NOTIFY`, keep the direct URL, or change the pool mode to session first. See [Connection pooling](/postgres/cluster-configuration#connection-pooling).
+
 See [Connect your client](/postgres/client-configuration).
 
 ## Upgrade to a larger plan
