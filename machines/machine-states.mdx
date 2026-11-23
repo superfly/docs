@@ -19,7 +19,7 @@ If you query a Machine without specifying a version, the API returns the current
 
 ### Persistent states
 
-These states remain until you take action (or something fails).
+These states remain until a user action or platform lifecycle policy changes them.
 
 | State | Description |
 |-------|-------------|
@@ -27,7 +27,7 @@ These states remain until you take action (or something fails).
 | `started` | Running and network-accessible |
 | `stopped` | Exited, either on its own or explicitly stopped |
 | `suspended` | Suspended to disk; will attempt to resume on next start |
-| `archived` | Released from its host; the next start rebuilds it, possibly elsewhere with a new private IP |
+| `archived` | Inactive; the next start may rebuild it on another host with a new private IP |
 | `failed` | Machine encountered an error and could not start successfully |
 
 ### Transient states
@@ -98,7 +98,8 @@ To troubleshoot:
 
 - `replaced` applies only to old versions and is terminal for that version. If you query an older version by ID, the API will always return `replaced` for that version, even if the Machine is currently running.
 - `migrated` indicates the Machine was moved to a new host and is no longer active.
-- Machines in `suspended` preserve memory and disk state, and resume faster than `stopped`.
+- Machines in `suspended` preserve memory and disk state, and resume faster than `stopped`. Machines that exceed the suspension threshold are automatically stopped; their next start performs a cold boot.
+- Stopped Machines without attached volumes or a persistent root filesystem can be automatically archived after exceeding the archive threshold. Archived Machines can still be started. Host resources may initially be retained and released later; after release, the next start rebuilds the Machine, possibly on another host with a new private IP.
 - The `launch_failed` state is usually unrecoverable and transitions to `destroyed`.
 - Machines in `failed` may be recoverable. You can try restarting, stopping, or destroying them.
 
