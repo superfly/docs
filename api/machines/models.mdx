@@ -295,11 +295,11 @@ Optional parameters
 
 | Property | Type | Required | Description |
 | --- | --- | --- | --- |
-| `disk_size_gb` | `integer` | No | Disk size in gigabytes. |
+| `disk_size_gb` | `integer` | No | Disk size in gigabytes. Defaults to the plan's starting size: 1 for dev-256 and 10 for the other plans. |
 | `name` | `string` | No | Name for the cluster. A name is generated when omitted. |
 | `org_slug` | `string` | Yes | Slug of the organization that will own the cluster, or "personal" for the caller's personal organization. |
 | `pg_major_version` | `string` | No | Postgres major version. Enum: 16, 17 |
-| `plan` | `string` | Yes | Plan slug selecting CPU, memory, and disk sizing. Matched case-insensitively. Enum: basic, starter, launch, scale, Performance |
+| `plan` | `string` | Yes | Plan slug selecting CPU, memory, and disk sizing. Matched case-insensitively. Enum: dev-256, basic, starter, launch, scale, Performance |
 | `pool_mode` | `string` | No | Connection pooler mode. Enum: session, transaction |
 | `postgis_enabled` | `boolean` | No | Enable PostGIS support, required to later enable PostGIS extensions. |
 | `region` | `string` | Yes | Fly region code where the cluster's primary runs. |
@@ -891,7 +891,7 @@ Enum: stop
 | Property | Type | Required | Description |
 | --- | --- | --- | --- |
 | `name` | `string` | No | Name for the forked cluster. Defaults to the source name with a -fork suffix. |
-| `plan` | `string` | No | Plan slug selecting CPU and memory sizing for the fork. Defaults to the source cluster's plan. Matched case-insensitively. Enum: basic, starter, launch, scale, Performance |
+| `plan` | `string` | No | Plan slug selecting CPU and memory sizing for the fork. Defaults to the source cluster's plan. Matched case-insensitively. Enum: dev-256, basic, starter, launch, scale, Performance |
 
 ## getPostgresUserCredentialsResponse
 
@@ -1394,7 +1394,7 @@ Type: `map<string, integer>`
 | `name` | `string` | No | Cluster name. |
 | `organization` | `OrganizationRef` | No |  |
 | `pg_major_version` | `string` | No | Postgres major version. Enum: 16, 17 |
-| `plan` | `string` | No | Plan slug. Enum: basic, starter, launch, scale, Performance |
+| `plan` | `string` | No | Plan slug. Enum: dev-256, basic, starter, launch, scale, Performance |
 | `postgis_enabled` | `boolean` | No | Whether PostGIS support is enabled. |
 | `region` | `string` | No | Fly region code. |
 | `replicas` | `integer` | No | Number of replicas. |
@@ -1417,7 +1417,7 @@ Type: `map<string, integer>`
 | `deleted_at` | `string` | No | RFC 3339 deletion timestamp; present for deleted clusters. |
 | `id` | `string` | No | Cluster ID. |
 | `name` | `string` | No | Cluster name. |
-| `plan` | `string` | No | Plan slug. Enum: basic, starter, launch, scale, Performance |
+| `plan` | `string` | No | Plan slug. Enum: dev-256, basic, starter, launch, scale, Performance |
 | `region` | `string` | No | Fly region code. |
 | `status` | `string` | No | Current lifecycle status. Enum: creating, initializing, ready, deleting, deleted, failed |
 
@@ -1488,7 +1488,7 @@ Type: `map<string, integer>`
 | `cpus` | `integer` | No | vCPUs per node. |
 | `memory_mb` | `integer` | No | Memory per node in megabytes. |
 | `monthly_price_usd` | `integer` | No | Base monthly price in US dollars. |
-| `plan` | `string` | No | Plan slug. Pass it as `plan` when creating or forking a cluster. Enum: basic, starter, launch, scale, Performance |
+| `plan` | `string` | No | Plan slug. Pass it as `plan` when creating or forking a cluster. Enum: dev-256, basic, starter, launch, scale, Performance |
 
 ## PostgresQueryColumn
 
@@ -1649,7 +1649,7 @@ Enum: 1, 2, 4, 8, 16, 31, 0
 
 | Property | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `PostgresMaintenanceWindow` | No |  |
+| `data` | `PostgresMaintenanceWindow` | No | The cluster's maintenance window, or null when it has none and its maintenance can run at any time. |
 
 ## SignalRequest
 
