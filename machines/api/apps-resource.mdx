@@ -14,6 +14,10 @@ You can use the Apps resource to create and manage Fly Apps. A Fly App is an abs
       <span className="w-16 shrink-0 text-center rounded-full bg-emerald-800/60 text-emerald-300 text-xs font-mono py-1">POST</span>
       <span className="text-slate-200 font-mono text-sm">/v1/apps</span>
     </a>
+    <a href="#allocate-an-ip-address-for-global-request-routing" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-emerald-800/60 text-emerald-300 text-xs font-mono py-1">POST</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps/{'{app_name}'}/ip_assignments</span>
+    </a>
     <a href="#get-app-details" className="flex items-center gap-3 no-underline hover:opacity-80">
       <span className="w-16 shrink-0 text-center rounded-full bg-sky-900/60 text-sky-300 text-xs font-mono py-1">GET</span>
       <span className="text-slate-200 font-mono text-sm">/v1/apps/{'{app_name}'}</span>
@@ -76,9 +80,37 @@ To segment the app into its own network, you can pass a `network` argument in th
 
 ## Allocate an IP address for global request routing
 
-If you intend for Machines to be accessible to the internet, you’ll need to allocate an IP address to the app. Currently this is done using `flyctl` or the [Fly.io GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](/networking/services#about-anycast). Read more about this in [the Networking section](/machines/api/machines-resource#notes-on-networking).
+`POST /v1/apps/{app_name}/ip_assignments`
 
-Example:
+If you intend for Machines to be accessible to the internet, you’ll need to allocate an IP address to the app, with this endpoint or with `flyctl`. This offers your app automatic, global routing via [Anycast](/networking/services#about-anycast). Read more about this in [the Networking section](/machines/api/machines-resource#notes-on-networking).
+
+#### Body parameters
+
+<ParamField body="type" type="string" required>
+  Type of IP address to allocate: `shared_v4` (an IPv4 address shared with other apps), `v4` (a dedicated IPv4 address), `v6`, or `private_v6` (a [Flycast](/networking/flycast) address). The [OpenAPI spec](https://docs.machines.dev/openapi.json) also lists the egress types.
+</ParamField>
+
+```sh title="POST/v1/apps/{app_name}/ip_assignments"
+curl -i -X POST \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/ip_assignments" \
+  -d '{"type": "shared_v4"}'
+```
+
+```json title="Status: 200 OK - Example response"
+{
+  "ip": "66.241.125.240",
+  "region": null,
+  "service_name": null,
+  "shared": true,
+  "created_at": null,
+  "egress": false,
+  "network": null,
+  "ip_pair": null
+}
+```
+
+With flyctl:
 
 <CodeGroup>
 ```sh cmd
