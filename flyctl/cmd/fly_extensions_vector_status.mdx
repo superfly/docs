@@ -3,8 +3,10 @@ title: fly extensions vector status
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions_vector_status
 ---
 
-Show details about an Upstash Vector index
-
+Show an Upstash Vector index's name, status and region. Name the index
+as an argument, or run the command in an app directory (or with `--app`)
+to use the app's index. When the index is found through an app, the
+app's name is shown too.
 
 ## Usage
 ```
@@ -27,4 +29,4 @@ fly extensions vector status [name] [flags]
 ```
 ## See Also
 
-* [fly extensions vector](/flyctl/cmd/fly_extensions_vector)	 - Provision and manage Upstash Vector index
+* [fly extensions vector](/flyctl/cmd/fly_extensions_vector)	 - Provision and manage Upstash Vector indexes

@@ -3,7 +3,11 @@ title: fly mpg databases list
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_databases_list
 ---
 
-List databases in a Managed Postgres cluster.
+List the databases in a Managed Postgres cluster by name.
+
+With no cluster ID, you pick an organization (unless FLY_ORG is set) and a
+cluster from lists in a terminal; without a terminal, the cluster ID is
+required.
 
 ## Usage
 ```
@@ -24,4 +28,4 @@ fly mpg databases list <CLUSTER_ID> [flags]
 ```
 ## See Also
 
-* [fly mpg databases](/flyctl/cmd/fly_mpg_databases)	 - Manage databases in a managed postgres cluster
+* [fly mpg databases](/flyctl/cmd/fly_mpg_databases)	 - Manage databases in a Managed Postgres cluster

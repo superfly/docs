@@ -3,7 +3,14 @@ title: fly mpg status
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_status
 ---
 
-Show status and details of a specific Managed Postgres cluster using its ID.
+Show the status of a Managed Postgres cluster: its ID, name,
+organization, region, status, storage used and allocated (only allocated
+for v1 clusters), replica count and direct IP address. With --json, the
+output includes the cluster's credentials, including the password.
+
+With no cluster ID, you pick an organization (unless FLY_ORG is set) and a
+cluster from lists in a terminal; without a terminal, the cluster ID is
+required.
 
 ## Usage
 ```
@@ -24,4 +31,4 @@ fly mpg status [CLUSTER_ID] [flags]
 ```
 ## See Also
 
-* [fly mpg](/flyctl/cmd/fly_mpg)	 - Manage Managed Postgres clusters.
+* [fly mpg](/flyctl/cmd/fly_mpg)	 - Manage Managed Postgres clusters

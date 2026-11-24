@@ -3,18 +3,19 @@ title: fly extensions vector
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions_vector
 ---
 
-Provision and manage Upstash Vector index
-
+Provision and manage Upstash Vector indexes. An index can be attached to
+an app, which then gets the index's credentials as secrets, or belong
+only to an organization. Create one with `fly ext vector create`.
 
 ## Usage
 ```
 fly extensions vector [command] [flags]
 ```
 ## Available Commands
-* [create](/flyctl/cmd/fly_extensions_vector_create)	 - Provision a Upstash Vector index
-* [dashboard](/flyctl/cmd/fly_extensions_vector_dashboard)	 - Visit the Upstash Vector dashboard on the Upstash web console
+* [create](/flyctl/cmd/fly_extensions_vector_create)	 - Provision an Upstash Vector index
+* [dashboard](/flyctl/cmd/fly_extensions_vector_dashboard)	 - Open the Upstash Vector dashboard in your browser
 * [destroy](/flyctl/cmd/fly_extensions_vector_destroy)	 - Permanently destroy an Upstash Vector index
-* [list](/flyctl/cmd/fly_extensions_vector_list)	 - List your Upstash Vector index
+* [list](/flyctl/cmd/fly_extensions_vector_list)	 - List your Upstash Vector indexes
 * [status](/flyctl/cmd/fly_extensions_vector_status)	 - Show details about an Upstash Vector index
 
 ## Options
@@ -31,4 +32,4 @@ fly extensions vector [command] [flags]
 ```
 ## See Also
 
-* [fly extensions](/flyctl/cmd/fly_extensions)	 - Extensions are additional functionality that can be added to your Fly apps
+* [fly extensions](/flyctl/cmd/fly_extensions)	 - Provision and manage extensions for Fly apps

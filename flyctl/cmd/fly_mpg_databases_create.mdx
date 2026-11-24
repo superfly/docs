@@ -3,7 +3,16 @@ title: fly mpg databases create
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_databases_create
 ---
 
-Create a new database in a Managed Postgres cluster.
+Create a database in a Managed Postgres cluster. Pass the name with
+--name, or enter it when asked in a terminal; without a terminal, --name
+is required.
+
+With no cluster ID, you pick an organization (unless FLY_ORG is set) and a
+cluster from lists in a terminal; without a terminal, the cluster ID is
+required.
+
+To give an app a connection string for the new database, use
+`fly mpg attach --database`.
 
 ## Usage
 ```
@@ -24,4 +33,4 @@ fly mpg databases create <CLUSTER_ID> [flags]
 ```
 ## See Also
 
-* [fly mpg databases](/flyctl/cmd/fly_mpg_databases)	 - Manage databases in a managed postgres cluster
+* [fly mpg databases](/flyctl/cmd/fly_mpg_databases)	 - Manage databases in a Managed Postgres cluster

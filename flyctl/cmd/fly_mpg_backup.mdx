@@ -3,16 +3,16 @@ title: fly mpg backup
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_backup
 ---
 
-Backup commands
-
+List and create backups of a Managed Postgres cluster. To restore a
+backup into a new cluster, use `fly mpg restore`.
 
 ## Usage
 ```
 fly mpg backup [command] [flags]
 ```
 ## Available Commands
-* [create](/flyctl/cmd/fly_mpg_backup_create)	 - Create MPG cluster backup.
-* [list](/flyctl/cmd/fly_mpg_backup_list)	 - List MPG cluster backups.
+* [create](/flyctl/cmd/fly_mpg_backup_create)	 - Create a backup of a Managed Postgres cluster
+* [list](/flyctl/cmd/fly_mpg_backup_list)	 - List backups of a Managed Postgres cluster
 
 ## Options
 
@@ -28,4 +28,4 @@ fly mpg backup [command] [flags]
 ```
 ## See Also
 
-* [fly mpg](/flyctl/cmd/fly_mpg)	 - Manage Managed Postgres clusters.
+* [fly mpg](/flyctl/cmd/fly_mpg)	 - Manage Managed Postgres clusters

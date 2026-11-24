@@ -3,7 +3,15 @@ title: fly mpg backup list
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_backup_list
 ---
 
-List backups for a Managed Postgres cluster.
+List backups of a Managed Postgres cluster with each backup's ID, start
+time, status and type. By default only backups started in the last 24
+hours are shown; pass --all to see every backup.
+
+With no cluster ID, you pick an organization (unless FLY_ORG is set) and a
+cluster from lists in a terminal; without a terminal, the cluster ID is
+required.
+
+Restore a backup into a new cluster with `fly mpg restore --backup-id`.
 
 ## Usage
 ```
@@ -25,4 +33,4 @@ fly mpg backup list <CLUSTER_ID> [flags]
 ```
 ## See Also
 
-* [fly mpg backup](/flyctl/cmd/fly_mpg_backup)	 - Backup commands
+* [fly mpg backup](/flyctl/cmd/fly_mpg_backup)	 - Manage Managed Postgres backups

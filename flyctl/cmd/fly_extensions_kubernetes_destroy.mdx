@@ -3,7 +3,12 @@ title: fly extensions kubernetes destroy
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions_kubernetes_destroy
 ---
 
-Permanently destroy a Kubernetes cluster
+Permanently destroy a Fly Kubernetes cluster, given by name as the
+argument. This can't be undone.
+
+You're asked to confirm first. Pass `--yes` to skip the prompt; without
+a terminal, `--yes` is required. Find cluster names with
+`fly ext k8s list`.
 
 ## Usage
 ```
@@ -24,4 +29,4 @@ fly extensions kubernetes destroy [name] [flags]
 ```
 ## See Also
 
-* [fly extensions kubernetes](/flyctl/cmd/fly_extensions_kubernetes)	 - Provision and manage Kubernetes clusters
+* [fly extensions kubernetes](/flyctl/cmd/fly_extensions_kubernetes)	 - Provision and manage Fly Kubernetes clusters

@@ -3,9 +3,15 @@ title: fly mpg maintenance-window show
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_maintenance-window_show
 ---
 
-Show the weekly maintenance window of a Managed Postgres cluster.
-Some clusters have no window: their maintenance can run at any time. For them
-it prints that, or null with --json.
+Show the weekly maintenance window of a Managed Postgres cluster: the day
+it starts, the start hour in the cluster's regional timezone, and how many
+hours it lasts. Some clusters have no window: their maintenance can run at
+any time. For them it prints that, or null with --json.
+
+With no cluster ID, you pick an organization (unless FLY_ORG is set) and a
+cluster from lists in a terminal; without a terminal, the cluster ID is
+required. To change the window, run `fly mpg maintenance-window set`. Not
+available for v1 clusters.
 
 ## Usage
 ```

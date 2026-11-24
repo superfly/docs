@@ -3,8 +3,9 @@ title: fly extensions kubernetes
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions_kubernetes
 ---
 
-Provision and manage Kubernetes clusters
-
+Provision and manage Fly Kubernetes clusters, which are in beta. Create
+a cluster with `fly ext k8s create`, which writes a kubeconfig file for
+kubectl. Fetch that file again later with `fly ext k8s save-kubeconfig`.
 
 ## Usage
 ```
@@ -14,7 +15,7 @@ fly extensions kubernetes [command] [flags]
 * [create](/flyctl/cmd/fly_extensions_kubernetes_create)	 - Provision a Kubernetes cluster for an organization
 * [destroy](/flyctl/cmd/fly_extensions_kubernetes_destroy)	 - Permanently destroy a Kubernetes cluster
 * [list](/flyctl/cmd/fly_extensions_kubernetes_list)	 - List your Kubernetes clusters
-* [save-kubeconfig](/flyctl/cmd/fly_extensions_kubernetes_save-kubeconfig)	 - Save the kubeconfig file of your cluster
+* [save-kubeconfig](/flyctl/cmd/fly_extensions_kubernetes_save-kubeconfig)	 - Save a Kubernetes cluster's kubeconfig to a file
 
 ## Options
 
@@ -30,4 +31,4 @@ fly extensions kubernetes [command] [flags]
 ```
 ## See Also
 
-* [fly extensions](/flyctl/cmd/fly_extensions)	 - Extensions are additional functionality that can be added to your Fly apps
+* [fly extensions](/flyctl/cmd/fly_extensions)	 - Provision and manage extensions for Fly apps

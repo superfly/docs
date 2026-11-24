@@ -3,7 +3,14 @@ title: fly mpg backup create
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_backup_create
 ---
 
-Create a backup for a Managed Postgres cluster.
+Queue a backup of a Managed Postgres cluster. The backup is full unless
+--type incr asks for an incremental one. The command returns once the
+backup is queued, not when it finishes; check on it with
+`fly mpg backup list`.
+
+With no cluster ID, you pick an organization (unless FLY_ORG is set) and a
+cluster from lists in a terminal; without a terminal, the cluster ID is
+required.
 
 ## Usage
 ```
@@ -24,4 +31,4 @@ fly mpg backup create <CLUSTER_ID> [flags]
 ```
 ## See Also
 
-* [fly mpg backup](/flyctl/cmd/fly_mpg_backup)	 - Backup commands
+* [fly mpg backup](/flyctl/cmd/fly_mpg_backup)	 - Manage Managed Postgres backups
