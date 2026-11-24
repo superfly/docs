@@ -3,17 +3,18 @@ title: fly mpg databases extensions
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_databases_extensions
 ---
 
-Manage Postgres extensions in a managed postgres cluster database
-
+List, enable and disable Postgres extensions in a database of a Managed
+Postgres cluster. Start with `fly mpg databases extensions list` to see which
+extensions are available and installed.
 
 ## Usage
 ```
 fly mpg databases extensions [command] [flags]
 ```
 ## Available Commands
-* [disable](/flyctl/cmd/fly_mpg_databases_extensions_disable)	 - Disable a Postgres extension on a database.
-* [enable](/flyctl/cmd/fly_mpg_databases_extensions_enable)	 - Enable a Postgres extension on a database.
-* [list](/flyctl/cmd/fly_mpg_databases_extensions_list)	 - List Postgres extensions for a database in an MPG cluster.
+* [disable](/flyctl/cmd/fly_mpg_databases_extensions_disable)	 - Disable a Postgres extension in a Managed Postgres database
+* [enable](/flyctl/cmd/fly_mpg_databases_extensions_enable)	 - Enable a Postgres extension in a Managed Postgres database
+* [list](/flyctl/cmd/fly_mpg_databases_extensions_list)	 - List Postgres extensions in a Managed Postgres database
 
 ## Options
 
@@ -29,4 +30,4 @@ fly mpg databases extensions [command] [flags]
 ```
 ## See Also
 
-* [fly mpg databases](/flyctl/cmd/fly_mpg_databases)	 - Manage databases in a managed postgres cluster
+* [fly mpg databases](/flyctl/cmd/fly_mpg_databases)	 - Manage databases in a Managed Postgres cluster

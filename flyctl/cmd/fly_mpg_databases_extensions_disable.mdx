@@ -3,7 +3,15 @@ title: fly mpg databases extensions disable
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_databases_extensions_disable
 ---
 
-Disable a Postgres extension on a database in a Managed Postgres cluster.
+Disable (drop) a Postgres extension in a Managed Postgres database. With
+--force, objects that depend on the extension are dropped too (CASCADE).
+There's no confirmation prompt.
+
+With no --cluster, you pick an organization (unless FLY_ORG is set) and a
+cluster from lists in a terminal; without a terminal, --cluster is required.
+With no --database, the cluster's only database is used; if there are
+several, you pick one in a terminal, and without a terminal --database is
+required.
 
 ## Usage
 ```
@@ -26,4 +34,4 @@ fly mpg databases extensions disable <EXTENSION> [flags]
 ```
 ## See Also
 
-* [fly mpg databases extensions](/flyctl/cmd/fly_mpg_databases_extensions)	 - Manage Postgres extensions in a managed postgres cluster database
+* [fly mpg databases extensions](/flyctl/cmd/fly_mpg_databases_extensions)	 - Manage Postgres extensions in a Managed Postgres database

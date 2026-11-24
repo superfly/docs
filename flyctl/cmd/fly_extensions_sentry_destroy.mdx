@@ -3,7 +3,13 @@ title: fly extensions sentry destroy
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions_sentry_destroy
 ---
 
-Permanently destroy a Sentry project
+Remove a Sentry project from Fly.io's records. The project itself is not
+deleted from your Sentry account. Name the project as an argument, or
+run the command in an app directory (or with `--app`) to use the app's
+project.
+
+You're asked to confirm first. Pass `--yes` to skip the prompt; without
+a terminal, `--yes` is required.
 
 ## Usage
 ```
@@ -26,4 +32,4 @@ fly extensions sentry destroy [project-name] [flags]
 ```
 ## See Also
 
-* [fly extensions sentry](/flyctl/cmd/fly_extensions_sentry)	 - Setup a Sentry project for this app
+* [fly extensions sentry](/flyctl/cmd/fly_extensions_sentry)	 - Provision and manage Sentry projects

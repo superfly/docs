@@ -4,15 +4,16 @@ source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_maintenance-window
 ---
 
 Show or change the weekly window during which a Managed Postgres cluster
-may undergo maintenance. Times are in the cluster's regional timezone.
+may undergo maintenance. Times are in the cluster's regional timezone. Not
+available for v1 clusters.
 
 ## Usage
 ```
 fly mpg maintenance-window [command] [flags]
 ```
 ## Available Commands
-* [set](/flyctl/cmd/fly_mpg_maintenance-window_set)	 - Change an MPG cluster's maintenance window.
-* [show](/flyctl/cmd/fly_mpg_maintenance-window_show)	 - Show an MPG cluster's maintenance window.
+* [set](/flyctl/cmd/fly_mpg_maintenance-window_set)	 - Change a Managed Postgres cluster's maintenance window
+* [show](/flyctl/cmd/fly_mpg_maintenance-window_show)	 - Show a Managed Postgres cluster's maintenance window
 
 ## Options
 
@@ -28,4 +29,4 @@ fly mpg maintenance-window [command] [flags]
 ```
 ## See Also
 
-* [fly mpg](/flyctl/cmd/fly_mpg)	 - Manage Managed Postgres clusters.
+* [fly mpg](/flyctl/cmd/fly_mpg)	 - Manage Managed Postgres clusters

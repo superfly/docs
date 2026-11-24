@@ -3,7 +3,12 @@ title: fly extensions sentry dashboard
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions_sentry_dashboard
 ---
 
-View application errors in the Sentry dashboard
+Open the Sentry dashboard for an app's project in your browser, using a
+sign-in link from Fly.io. Run the command in an app directory or pass
+`--app`.
+
+If you haven't accepted Sentry's terms of service yet, you're asked to;
+`--yes` accepts them, and is required to do so without a terminal.
 
 ## Usage
 ```
@@ -26,4 +31,4 @@ fly extensions sentry dashboard [flags]
 ```
 ## See Also
 
-* [fly extensions sentry](/flyctl/cmd/fly_extensions_sentry)	 - Setup a Sentry project for this app
+* [fly extensions sentry](/flyctl/cmd/fly_extensions_sentry)	 - Provision and manage Sentry projects

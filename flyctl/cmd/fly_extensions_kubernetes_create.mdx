@@ -3,8 +3,16 @@ title: fly extensions kubernetes create
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions_kubernetes_create
 ---
 
-Provision a Kubernetes cluster for an organization
+Provision a Fly Kubernetes cluster in an organization, which you pick
+from a list unless you pass `--org` or set FLY_ORG. Fly Kubernetes is in
+beta. You may also be asked for a name and region, unless you pass
+`--name` and `--region`. Without a terminal, pass `--name`, `--region`,
+and `--org` or FLY_ORG.
 
+After the cluster is created, its kubeconfig is written to a file named
+after the cluster, such as `my-cluster.kubeconfig.yml`, in the current
+directory, or to the path given with `--output`, replacing any existing
+file. Use it with kubectl to connect to the cluster.
 
 ## Usage
 ```
@@ -28,4 +36,4 @@ fly extensions kubernetes create [flags]
 ```
 ## See Also
 
-* [fly extensions kubernetes](/flyctl/cmd/fly_extensions_kubernetes)	 - Provision and manage Kubernetes clusters
+* [fly extensions kubernetes](/flyctl/cmd/fly_extensions_kubernetes)	 - Provision and manage Fly Kubernetes clusters

@@ -4,28 +4,34 @@ sidebarTitle: "Managed Postgres clusters (mpg)"
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg
 ---
 
-Manage Managed Postgres clusters.
+Manage Managed Postgres (MPG) clusters, the Postgres service that Fly.io
+operates for you. You don't run its machines yourself; you work with
+clusters, databases, users and backups through these commands.
 
+Start with `fly mpg create`, then give an app its connection string
+with `fly mpg attach` or open a psql session with `fly mpg connect`.
+For the older, unmanaged Fly Postgres that runs as an app in your
+organization, use `fly postgres`.
 
 ## Usage
 ```
 fly mpg [command] [flags]
 ```
 ## Available Commands
-* [attach](/flyctl/cmd/fly_mpg_attach)	 - Attach a managed Postgres cluster to an app
-* [backup](/flyctl/cmd/fly_mpg_backup)	 - Backup commands
-* [connect](/flyctl/cmd/fly_mpg_connect)	 - Connect to a MPG database using psql
-* [create](/flyctl/cmd/fly_mpg_create)	 - Create a new Managed Postgres cluster
-* [databases](/flyctl/cmd/fly_mpg_databases)	 - Manage databases in a managed postgres cluster
-* [destroy](/flyctl/cmd/fly_mpg_destroy)	 - Destroy a managed Postgres cluster
-* [detach](/flyctl/cmd/fly_mpg_detach)	 - Detach a managed Postgres cluster from an app
-* [fork](/flyctl/cmd/fly_mpg_fork)	 - Fork MPG cluster into a new cluster from its current data.
-* [list](/flyctl/cmd/fly_mpg_list)	 - List MPG clusters.
+* [attach](/flyctl/cmd/fly_mpg_attach)	 - Attach a Managed Postgres cluster to an app
+* [backup](/flyctl/cmd/fly_mpg_backup)	 - Manage Managed Postgres backups
+* [connect](/flyctl/cmd/fly_mpg_connect)	 - Connect to a Managed Postgres database with psql
+* [create](/flyctl/cmd/fly_mpg_create)	 - Create a Managed Postgres cluster
+* [databases](/flyctl/cmd/fly_mpg_databases)	 - Manage databases in a Managed Postgres cluster
+* [destroy](/flyctl/cmd/fly_mpg_destroy)	 - Destroy a Managed Postgres cluster
+* [detach](/flyctl/cmd/fly_mpg_detach)	 - Detach a Managed Postgres cluster from an app
+* [fork](/flyctl/cmd/fly_mpg_fork)	 - Fork a Managed Postgres cluster into a new cluster
+* [list](/flyctl/cmd/fly_mpg_list)	 - List Managed Postgres clusters in an organization
 * [maintenance-window](/flyctl/cmd/fly_mpg_maintenance-window)	 - Show or change a cluster's weekly maintenance window
-* [proxy](/flyctl/cmd/fly_mpg_proxy)	 - Proxy to a MPG database
-* [restore](/flyctl/cmd/fly_mpg_restore)	 - Restore MPG cluster from a backup or a point in time into a new cluster.
-* [status](/flyctl/cmd/fly_mpg_status)	 - Show MPG cluster status.
-* [users](/flyctl/cmd/fly_mpg_users)	 - Manage users in a managed postgres cluster
+* [proxy](/flyctl/cmd/fly_mpg_proxy)	 - Proxy a local port to a Managed Postgres cluster
+* [restore](/flyctl/cmd/fly_mpg_restore)	 - Restore a Managed Postgres cluster into a new cluster
+* [status](/flyctl/cmd/fly_mpg_status)	 - Show the status of a Managed Postgres cluster
+* [users](/flyctl/cmd/fly_mpg_users)	 - Manage users in a Managed Postgres cluster
 
 ## Options
 

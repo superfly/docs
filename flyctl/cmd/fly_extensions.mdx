@@ -3,18 +3,24 @@ title: fly extensions
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions
 ---
 
-Extensions are additional functionality that can be added to your Fly apps
+Provision and manage services from Fly.io extension partners, such as
+Tigris object storage, Sentry, Upstash Vector, Arcjet and Wafris, as well as
+Fly Kubernetes clusters. Many extensions can be attached to an app, which
+then gets the extension's credentials as secrets.
+
+Each extension has its own subcommand, such as `fly ext storage` or
+`fly ext sentry`. Most start with a create command.
 
 ## Usage
 ```
 fly extensions [command] [flags]
 ```
 ## Available Commands
-* [arcjet](/flyctl/cmd/fly_extensions_arcjet)	 - Provision and manage Arcjet
-* [kubernetes](/flyctl/cmd/fly_extensions_kubernetes)	 - Provision and manage Kubernetes clusters
-* [sentry](/flyctl/cmd/fly_extensions_sentry)	 - Setup a Sentry project for this app
+* [arcjet](/flyctl/cmd/fly_extensions_arcjet)	 - Provision and manage Arcjet sites
+* [kubernetes](/flyctl/cmd/fly_extensions_kubernetes)	 - Provision and manage Fly Kubernetes clusters
+* [sentry](/flyctl/cmd/fly_extensions_sentry)	 - Provision and manage Sentry projects
 * [storage](/flyctl/cmd/fly_extensions_storage)	 - Provision and manage Tigris object storage buckets
-* [vector](/flyctl/cmd/fly_extensions_vector)	 - Provision and manage Upstash Vector index
+* [vector](/flyctl/cmd/fly_extensions_vector)	 - Provision and manage Upstash Vector indexes
 * [wafris](/flyctl/cmd/fly_extensions_wafris)	 - Provision and manage Wafris WAFs (Web Application Firewalls)
 
 ## Options

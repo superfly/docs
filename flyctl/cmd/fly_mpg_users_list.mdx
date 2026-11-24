@@ -3,7 +3,12 @@ title: fly mpg users list
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_users_list
 ---
 
-List users in a Managed Postgres cluster.
+List the database users in a Managed Postgres cluster with each user's
+role.
+
+With no cluster ID, you pick an organization (unless FLY_ORG is set) and a
+cluster from lists in a terminal; without a terminal, the cluster ID is
+required.
 
 ## Usage
 ```
@@ -24,4 +29,4 @@ fly mpg users list <CLUSTER_ID> [flags]
 ```
 ## See Also
 
-* [fly mpg users](/flyctl/cmd/fly_mpg_users)	 - Manage users in a managed postgres cluster
+* [fly mpg users](/flyctl/cmd/fly_mpg_users)	 - Manage users in a Managed Postgres cluster

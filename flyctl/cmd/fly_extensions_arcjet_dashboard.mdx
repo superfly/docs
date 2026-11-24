@@ -3,7 +3,14 @@ title: fly extensions arcjet dashboard
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions_arcjet_dashboard
 ---
 
-Visit the Arcjet dashboard
+Open the Arcjet console for a site in your browser, using a sign-in link
+from Fly.io. Name the site as an argument, or run the command in an app
+directory (or with `--app`) to use the app's site. With `--org`, or with
+FLY_ORG set, it opens that organization's Arcjet dashboard instead, even
+if you name a site.
+
+If you haven't accepted Arcjet's terms of service yet, you're asked to;
+`--yes` accepts them, and is required to do so without a terminal.
 
 ## Usage
 ```
@@ -27,4 +34,4 @@ fly extensions arcjet dashboard [site_name] [flags]
 ```
 ## See Also
 
-* [fly extensions arcjet](/flyctl/cmd/fly_extensions_arcjet)	 - Provision and manage Arcjet
+* [fly extensions arcjet](/flyctl/cmd/fly_extensions_arcjet)	 - Provision and manage Arcjet sites

@@ -3,8 +3,9 @@ title: fly extensions sentry
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions_sentry
 ---
 
-Setup a Sentry project for this app
-
+Provision and manage Sentry error-tracking projects for your Fly apps.
+Each app can have one project. Create it with `fly ext sentry create`,
+then open its errors with `fly ext sentry dashboard`.
 
 ## Usage
 ```
@@ -13,7 +14,7 @@ fly extensions sentry [command] [flags]
 ## Available Commands
 * [create](/flyctl/cmd/fly_extensions_sentry_create)	 - Provision a Sentry project for a Fly.io app
 * [dashboard](/flyctl/cmd/fly_extensions_sentry_dashboard)	 - View application errors in the Sentry dashboard
-* [destroy](/flyctl/cmd/fly_extensions_sentry_destroy)	 - Permanently destroy a Sentry project
+* [destroy](/flyctl/cmd/fly_extensions_sentry_destroy)	 - Remove a Sentry project from Fly.io
 * [list](/flyctl/cmd/fly_extensions_sentry_list)	 - List your Sentry projects
 
 ## Options
@@ -30,4 +31,4 @@ fly extensions sentry [command] [flags]
 ```
 ## See Also
 
-* [fly extensions](/flyctl/cmd/fly_extensions)	 - Extensions are additional functionality that can be added to your Fly apps
+* [fly extensions](/flyctl/cmd/fly_extensions)	 - Provision and manage extensions for Fly apps

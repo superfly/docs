@@ -3,7 +3,13 @@ title: fly extensions wafris destroy
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions_wafris_destroy
 ---
 
-Permanently destroy a Wafris WAF
+Permanently destroy a Wafris WAF. This can't be undone. Name the WAF as
+an argument, or run the command in an app directory (or with `--app`) to
+destroy the app's WAF.
+
+You're asked to confirm first. Pass `--yes` to skip the prompt; without
+a terminal, `--yes` is required. The WAF's secrets are not removed from
+the app; unset them with `fly secrets unset`.
 
 ## Usage
 ```

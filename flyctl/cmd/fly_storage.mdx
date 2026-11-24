@@ -4,8 +4,12 @@ sidebarTitle: "Manage Tigris storage (storage)"
 source_url: https://docs.fly.io/flyctl/cmd/fly_storage
 ---
 
-Provision and manage Tigris object storage buckets
+Provision and manage Tigris object storage buckets. A bucket can be
+attached to an app, which then gets the bucket's credentials as secrets,
+or belong only to an organization.
 
+Create a bucket with `fly storage create`, and see its settings with
+`fly storage status`.
 
 ## Usage
 ```

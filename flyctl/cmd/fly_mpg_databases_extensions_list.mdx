@@ -3,7 +3,14 @@ title: fly mpg databases extensions list
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_databases_extensions_list
 ---
 
-List Postgres extensions in a database, showing which are currently installed.
+List the Postgres extensions available in a Managed Postgres database,
+showing which are installed and, for those, their version and schema.
+
+With no cluster ID, you pick an organization (unless FLY_ORG is set) and a
+cluster from lists in a terminal; without a terminal, the cluster ID is
+required. With no --database, the cluster's only database is used; if there
+are several, you pick one in a terminal, and without a terminal --database
+is required.
 
 ## Usage
 ```
@@ -25,4 +32,4 @@ fly mpg databases extensions list <CLUSTER_ID> [flags]
 ```
 ## See Also
 
-* [fly mpg databases extensions](/flyctl/cmd/fly_mpg_databases_extensions)	 - Manage Postgres extensions in a managed postgres cluster database
+* [fly mpg databases extensions](/flyctl/cmd/fly_mpg_databases_extensions)	 - Manage Postgres extensions in a Managed Postgres database

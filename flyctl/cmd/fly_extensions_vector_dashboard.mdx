@@ -3,7 +3,14 @@ title: fly extensions vector dashboard
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions_vector_dashboard
 ---
 
-Visit the Upstash Vector dashboard on the Upstash web console
+Open the Upstash web console for an app's Vector index in your browser,
+using a sign-in link from Fly.io. Run the command in an app directory or
+pass `--app`. With `--org`, or with FLY_ORG set, it opens that
+organization's Upstash Vector dashboard instead.
+
+If you haven't accepted Upstash Vector's terms of service yet, you're
+asked to; `--yes` accepts them, and is required to do so without a
+terminal.
 
 ## Usage
 ```
@@ -27,4 +34,4 @@ fly extensions vector dashboard [flags]
 ```
 ## See Also
 
-* [fly extensions vector](/flyctl/cmd/fly_extensions_vector)	 - Provision and manage Upstash Vector index
+* [fly extensions vector](/flyctl/cmd/fly_extensions_vector)	 - Provision and manage Upstash Vector indexes

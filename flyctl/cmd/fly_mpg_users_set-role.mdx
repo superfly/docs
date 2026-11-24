@@ -3,7 +3,13 @@ title: fly mpg users set-role
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_users_set-role
 ---
 
-Update a user's role in a Managed Postgres cluster.
+Change a database user's role in a Managed Postgres cluster to
+schema_admin, writer or reader. Pass --username and --role, or pick them
+from lists in a terminal; without a terminal, both are required.
+
+With no cluster ID, you pick an organization (unless FLY_ORG is set) and a
+cluster from lists in a terminal; without a terminal, the cluster ID is
+required.
 
 ## Usage
 ```
@@ -25,4 +31,4 @@ fly mpg users set-role <CLUSTER_ID> [flags]
 ```
 ## See Also
 
-* [fly mpg users](/flyctl/cmd/fly_mpg_users)	 - Manage users in a managed postgres cluster
+* [fly mpg users](/flyctl/cmd/fly_mpg_users)	 - Manage users in a Managed Postgres cluster

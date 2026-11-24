@@ -3,7 +3,13 @@ title: fly extensions arcjet destroy
 source_url: https://docs.fly.io/flyctl/cmd/fly_extensions_arcjet_destroy
 ---
 
-Permanently destroy an Arcjet site
+Permanently destroy an Arcjet site. This can't be undone. Name the site
+as an argument, or run the command in an app directory (or with `--app`)
+to destroy the app's site.
+
+You're asked to confirm first. Pass `--yes` to skip the prompt; without
+a terminal, `--yes` is required. The site's secrets are not removed from
+the app; unset them with `fly secrets unset`.
 
 ## Usage
 ```
@@ -26,4 +32,4 @@ fly extensions arcjet destroy [name] [flags]
 ```
 ## See Also
 
-* [fly extensions arcjet](/flyctl/cmd/fly_extensions_arcjet)	 - Provision and manage Arcjet
+* [fly extensions arcjet](/flyctl/cmd/fly_extensions_arcjet)	 - Provision and manage Arcjet sites
