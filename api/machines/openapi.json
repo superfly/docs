@@ -11148,6 +11148,9 @@
           "mutation": {
             "type": "string"
           },
+          "network_name": {
+            "type": "string"
+          },
           "orgid": {
             "type": "integer"
           },
