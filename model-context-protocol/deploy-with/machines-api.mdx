@@ -61,7 +61,7 @@ curl -i -X POST \
   -H "Content-Type: application/json" \
   "${FLY_API_HOSTNAME}/v1/apps" \
   -d "{ \
-      \"app_name\": \"${APP_NAME}\", \
+      \"name\": \"${APP_NAME}\", \
       \"org_slug\": \"${ORG}\" \
     }"
 ```
@@ -70,46 +70,20 @@ Response should be a `200` Success, along with some JSON output.
 
 ## Create IP addresses for your application
 
-<Note>
-While the Fly.io GraphQL endpoint is public, our [usage of it](https://github.com/superfly/fly-go/blob/main/resource_ip_addresses.go) is [open source](https://github.com/superfly/fly-go/blob/main/LICENSE), can be directly observed by setting `LOG_LEVEL=debug` before running `flyctl` commands, and there are no current plans to change it, be aware that this interface is not guaranteed to be stable and can change without notice.  If this is a concern, consider using the [`fly ips`](/flyctl/cmd/fly_ips) command instead.
-</Note>
-
-The following will create a shared IPv4 address and a dedicated IPv6 address:
+The following uses the [Allocate an IP address](/machines/api/apps-resource#allocate-an-ip-address-for-global-request-routing) API to create a shared IPv4 address and a dedicated IPv6 address:
 
 ```json
 curl -i -X POST \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
   -H "Content-Type: application/json" \
-  "https://api.fly.io/graphql" \
-  -d @- <<EOF 
-    {
-      "query": "mutation(\$input: AllocateIPAddressInput!) { allocateIpAddress(input: \$input) { app { sharedIpAddress } } }",
-      "variables": {
-        "input": {
-          "appId": "${APP_NAME}",
-          "type": "shared_v4",
-          "region": ""
-        }
-      }
-    }
-EOF
+  "${FLY_API_HOSTNAME}/v1/apps/${APP_NAME}/ip_assignments" \
+  -d '{"type": "shared_v4"}'
 
 curl -i -X POST \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
   -H "Content-Type: application/json" \
-  "https://api.fly.io/graphql" \
-  -d @- <<EOF 
-    {
-      "query": "mutation(\$input: AllocateIPAddressInput!) { allocateIpAddress(input: \$input) { ipAddress { id address type region createdAt } } }",
-      "variables": {
-        "input": {
-          "appId": "${APP_NAME}",
-          "type": "v6",
-          "region": ""
-        }
-      }
-    }
-EOF
+  "${FLY_API_HOSTNAME}/v1/apps/${APP_NAME}/ip_assignments" \
+  -d '{"type": "v6"}'
 ```
 
 Other options include `v4` and `private_v6`.
