@@ -9,57 +9,23 @@ If you have an existing Rails app that you want to move over to Fly, this guide 
 
 ## Provision Rails and Postgres Servers
 
-To configure and launch your Rails app, you can use `fly launch` and follow the wizard.
+To configure and launch your Rails app with a [Managed Postgres](/postgres) cluster, run `fly launch` with `--db=mpg`:
 
-<CodeGroup>
-```bash cmd
-fly launch
+```bash
+fly launch --db=mpg
 ```
-```output output
-Creating app in ~/list
-Scanning source code
-Detected a Rails app
-? Choose an app name (leave blank to generate one): list
-? Select Organization: John Smith (personal)
-? Choose a region for deployment: Ashburn, Virginia (US) (iad)
-Created app list in organization personal
-Admin URL: https://fly.io/apps/list
-Hostname: list.fly.dev
-Set secrets on list: RAILS_MASTER_KEY
-? Would you like to set up a Postgresql database now? Yes
-For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clu
-? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
-Creating postgres cluster in organization personal
 
-. . .
+You'll get a summary of the defaults chosen for your app, including a Managed Postgres cluster on the Basic plan, and the launcher asks whether you want to tweak these settings. Type `y` to open the Fly Launch page and change the app name or region, or `n` to accept the defaults.
 
-Postgres cluster list-db is now attached to namelist
-? Would you like to set up an Upstash Redis database now? Yes
-? Select an Upstash Redis plan Free: 100 MB Max Data Size
+Once you confirm your settings, the launcher will:
 
-Your Upstash Redis database namelist-redis is ready.
+* Create the Managed Postgres cluster, wait for it to be ready, and set the `DATABASE_URL` secret on your app
+* Set the `RAILS_MASTER_KEY` secret
+* Generate a `Dockerfile`, `.dockerignore`, `bin/docker-entrypoint` and `fly.toml` for your Rails app
 
-. . .
+If your organization is on the [Free plan](/about/free-plan), `fly launch --db=mpg` can't create the cluster: launch uses the Basic plan, and the Free plan includes only the \$4 [Developer plan](/postgres/developer-plan). Instead, run `fly launch --no-db --no-deploy`, create a Developer plan cluster with `fly mpg create --plan dev-256`, [attach it](/postgres/create-and-connect) with `fly mpg attach <CLUSTER_ID>`, and then run `fly deploy`.
 
-      create  Dockerfile
-      create  .dockerignore
-      create  bin/docker-entrypoint
-      create  config/dockerfile.yml
-Wrote config file fly.toml
-
-Your Rails app is prepared for deployment.
-
-Before proceeding, please review the posted Rails FAQ:
-https://fly.io/docs/rails/getting-started/dockerfiles/.
-
-Once ready: run 'fly deploy' to deploy your Rails app.
-```
-</CodeGroup>
-
-You can set a name for the app, choose a default region, and choose to launch
-and attach either or both a PostgreSQL and Redis databases.  Be sure to include
-Redis is if you make use of Action Cable, caching, and popular third-party gems
-like Sidekiq.
+Include Redis if you use Action Cable, caching, or gems like Sidekiq. `fly redis create` provisions an Upstash Redis database, billed through Fly.io.
 
 ## Deploy your application
 
@@ -228,17 +194,17 @@ Accordingly:
 
 ### Postgres database drivers
 
-If you didn't initially deploy with a postgres database but want to add one
-later, you can create a database using [`fly postgres
-create`](/unmanaged-postgres/getting-started/create-pg-cluster).
-Next, update your dockerfile to include the postgres libraries using:
+If you didn't initially deploy with a Postgres database but want to add one
+later, create a [Managed Postgres](/postgres) cluster with `fly mpg create`.
+Next, update your Dockerfile to include the Postgres libraries using:
 
 ```shell
 $ bin/rails generate dockerfile --postgresql
 ```
 
-Finally, attach the database to your application using
-<code>[fly postgres attach](/unmanaged-postgres/managing/attach-detach)</code>.
+Finally, find the cluster ID with `fly mpg list` and attach the database to
+your application with `fly mpg attach <CLUSTER_ID>`. This sets the
+`DATABASE_URL` secret on your app.
 
 Multiple Rails applications can use the same PostgresQL server.  Just take
 care to make sure that each Rails application uses a different database name.
