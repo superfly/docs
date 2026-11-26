@@ -27,6 +27,8 @@ If you don't see `REDIS_URL` in the command above, Sidekiq won't be able to conn
 
 Most production Rails applications run background workers in a separate process. There's a few ways of accomplishing that on Fly that are [outlined in the multiple-processes](/app-guides/multiple-processes) docs.
 
+For how a web process, background workers and Redis fit together on Fly.io, see [Background job queues](/blueprints/work-queues).
+
 The quickest way to run multiple processes in one region is via the `processes` directive in the `fly.toml` file.
 
 <Info>
