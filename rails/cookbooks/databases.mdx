@@ -1,6 +1,6 @@
 ---
 title: Rails with Databases
-description: "Add databases to a Rails Dockerfile on Fly.io: Upstash Redis for Action Cable, SQLite on a volume, then Postgres via fly postgres attach, or MySQL."
+description: "Add databases to a Rails Dockerfile on Fly.io: Upstash Redis for Action Cable, SQLite on a volume, then Managed Postgres via fly mpg attach, or MySQL."
 source_url: https://fly.io/docs/rails/cookbooks/databases/
 ---
 
@@ -261,25 +261,21 @@ RUN apt-get update -qq && \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 ```
 
-Now you are ready to create a postgres cluster:
+Now you are ready to create a [Managed Postgres](/postgres) cluster:
 
 ```
-flyctl postgres create
+fly mpg create
 ```
 
-When done, you will find a link to
-[Fly Postgres](/unmanaged-postgres).  That information may be useful in the future so
-bookmark the link (or return back to this page), but Fly Postgres is
-fine for this demo.
+Follow the prompts to choose the cluster name, region, and plan.
 
-Your postgres app will be assigned a name if you didn't provide one.
-Find that name and then run:
+Find the cluster ID with `fly mpg list` and then run:
 
 ```
-flyctl postgres attach happy-store-1234
+fly mpg attach <CLUSTER_ID>
 ```
 
-... replacing the name with the one assigned or selected by you.
+... replacing `<CLUSTER_ID>` with your cluster's ID. This sets the `DATABASE_URL` secret on your app.
 
 Before proceeding, there is one more change that might be worth making.
 If you ever plan to scale up to multiple application machines it would
@@ -314,7 +310,7 @@ the same as with postgresql, with the following modifications:
   * Add the deploy release command to `fly.toml` from the postgresql instructions above.
   * You need to run `fly secrets set DATABASE_URL=` in your
     application.  For postgresql this is taken care of for you
-    by the `flyctl postgres attach` command.  This will look
+    by the `fly mpg attach` command.  This will look
     something like the following:
 
      ```
