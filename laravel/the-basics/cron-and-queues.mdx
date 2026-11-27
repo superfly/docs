@@ -45,6 +45,65 @@ We can start an instance of our queue worker by adding another process. In this 
 
 Note that you may want to expand on the `queue:listen` command. For example, you could run `php artisan queue:listen sqs --sleep=3 --tries=3 --max-time=3600` to use the `sqs` driver and determine other behaviors.
 
+## Complete fly.toml
+
+Here's a full `fly.toml` for a Laravel app with a web server, the scheduler, a queue worker, Managed Postgres and Upstash Redis. Postgres and Redis aren't `fly.toml` sections: you create them with flyctl, and your app gets their connection strings as secrets.
+
+```toml
+app = "my-laravel-app"
+primary_region = "ord"
+
+[build]
+  # fly launch sets these from your project
+  [build.args]
+    NODE_VERSION = "22"
+    PHP_VERSION = "8.3"
+
+[deploy]
+  release_command = "php /var/www/html/artisan migrate --force"
+
+[env]
+  APP_ENV = "production"
+  DB_CONNECTION = "pgsql"
+  QUEUE_CONNECTION = "redis"
+  LOG_CHANNEL = "stderr"
+  LOG_LEVEL = "info"
+  LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
+  SESSION_DRIVER = "cookie"
+  SESSION_SECURE_COOKIE = "true"
+
+[processes]
+  app = ""
+  cron = "cron -f"
+  worker = "php artisan queue:listen"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[vm]]
+  memory = "1gb"
+  cpu_kind = "shared"
+  cpus = 1
+```
+
+Create the databases and set their connection strings as secrets, then deploy:
+
+```bash
+fly mpg create --name my-laravel-db --region ord
+fly mpg attach <CLUSTER_ID> --variable-name DB_URL --app my-laravel-app
+fly redis create --name my-laravel-redis --region ord
+fly secrets set REDIS_URL="<URL printed by fly redis create>" --app my-laravel-app
+fly deploy
+```
+
+- `fly mpg list` shows the cluster ID. `fly mpg attach` stores the connection string in the secret named by `--variable-name`, `DATABASE_URL` by default. Laravel 11 and later read `DB_URL`; earlier versions read `DATABASE_URL`.
+- See [Managed Postgres](/postgres) and [Upstash for Redis](/upstash/redis) for plans and options.
+
 ## Extra Credit
 
 There's a few bits to explain about the above.
