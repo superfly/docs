@@ -8,7 +8,7 @@ import { RegionPricingSelector } from "/snippets/RegionPricingSelector.jsx"
 
   <img src="/images/pricing.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon demonstrating a pricing chart on a whiteboard" />
 
-**Fly.io bills for the resources you use, with no monthly platform fee. The smallest always-on app costs \$2.19 per 30 days. A small web app with a Managed Postgres database costs about \$44 a month. The table below lists what we charge for, followed by a few examples of what real-ish apps cost.**
+**Fly.io bills for the resources you use, with no monthly platform fee. The smallest always-on app costs \$2.19 per 30 days. A small web app with a Managed Postgres database costs about \$9 a month. The table below lists what we charge for, followed by a few examples of what real-ish apps cost.**
 
 ## Everything we bill for
 
@@ -52,15 +52,14 @@ If your Machines [auto-stop](/launch/autostop-autostart) when they're idle, your
 | --- | ---: |
 | One `shared-cpu-1x` 512MB Machine, running continuously | \$3.69 |
 | 10GB volume | \$1.50 |
-| Managed Postgres, Basic plan | \$38.00 |
-| 1GB of Managed Postgres storage (assumed) | \$0.28 |
+| Managed Postgres, Developer plan, storage included | \$4.00 |
 | Volume snapshots, within the 10GB free allowance (assumed) | \$0.00 |
 | 10GB outbound data to the internet from North America (assumed) | \$0.20 |
-| **Total** | **\$43.67** |
+| **Total** | **\$9.39** |
 
 The app and database run in the same region, so data transfer between them is free. The app also uses a shared IPv4 address, which is free.
 
-In this example, Managed Postgres accounts for most of the bill. The app Machine and its 10GB volume cost \$5.19 per month.
+The [Developer plan](/postgres/developer-plan) runs a two-node cluster with up to 5GB of storage and 20 connections, and pauses only after 15 minutes with no client connections, so it stays awake while the app keeps a connection open. Pick the Basic plan when the app needs more storage or connections, connection pooling, a database that never pauses, or backups kept for 10 days. Basic costs \$38 a month plus \$0.28 per GB of storage, which brings this example to about \$44 a month. See [Managed Postgres pricing](/postgres#pricing).
 
 ### A Discord bot or background worker running 24/7
 
