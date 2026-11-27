@@ -6,6 +6,54 @@ source_url: https://fly.io/docs/rails/the-basics/sidekiq/
 
 Rails applications commonly defer complex tasks that take a long to complete to a background worker to make web responses seem fast. This guide shows how to use [Sidekiq](https://github.com/mperham/sidekiq), a popular open-source Rails background job framework, to set up background workers, but it could be done with other great libraries like [Good Job](https://github.com/bensheldon/good_job), [Resque](https://github.com/resque/resque), [etc](https://www.ruby-toolbox.com/categories/Background_Jobs).
 
+## Complete fly.toml
+
+Puma and Sidekiq don't need a custom startup script on Fly.io: each runs in its own [process group](/launch/processes) in `fly.toml`. Here's a full `fly.toml` with Puma (`bin/rails server`) serving web traffic, a Sidekiq worker, a cron process, Managed Postgres and Upstash Redis:
+
+```toml
+app = "my-rails-app"
+primary_region = "ord"
+
+[build]
+
+[deploy]
+  release_command = "./bin/rails db:prepare"
+
+[processes]
+  app = "./bin/rails server"
+  worker = "bundle exec sidekiq"
+  cron = "supercronic /rails/crontab"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[vm]]
+  memory = "1gb"
+  cpu_kind = "shared"
+  cpus = 1
+```
+
+Postgres and Redis aren't `fly.toml` sections. Create them with flyctl, and your app gets their connection strings as the `DATABASE_URL` and `REDIS_URL` secrets:
+
+```bash
+fly mpg create --name my-rails-db --region ord
+fly mpg attach <CLUSTER_ID> --app my-rails-app
+fly redis create --name my-rails-redis --region ord
+fly secrets set REDIS_URL="<URL printed by fly redis create>" --app my-rails-app
+fly deploy
+```
+
+- `fly mpg list` shows the cluster ID. See [Managed Postgres](/postgres) for plans.
+- The `cron` group runs [Supercronic](/blueprints/supercronic), which you install in your Dockerfile. Rails Dockerfiles copy your project to `/rails`, so a `crontab` file at the root of your project ends up at `/rails/crontab`. Run one `cron` Machine so each job runs once: `fly scale count cron=1`. Remove the `cron` line if you don't have scheduled jobs.
+- Set `internal_port` to the port your app listens on.
+
+The rest of this guide walks through each piece.
+
 ## Provision a Redis server
 
 Sidekiq depends on Redis to communicate between the Rails server process and the background workers. Follow the [Redis setup guide](/upstash/redis) to provision a Redis server and set a `REDIS_URL` within the Rails app. Be sure to set the `REDIS_URL` via a secret as demonstrated [here](/rails/the-basics/configuration#secret-variables).
