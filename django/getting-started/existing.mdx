@@ -26,79 +26,21 @@ Fly.io has its own command-line utility for managing apps, [flyctl](/flyctl). If
 
 ## Provision Django and Postgres Servers
 
-To configure and launch the app, use the command `fly launch` and follow the wizard. You can set a name for the app, choose a default region, launch and attach a Postgres database. You can also set up a Redis database though we will not be doing so in this example.
+To configure and launch your Django app with a [Managed Postgres](/postgres) cluster, run `fly launch` with `--db=mpg`:
 
-<CodeGroup>
-```bash cmd
-fly launch
+```bash
+fly launch --db=mpg
 ```
-```output output
-Scanning source code
-Detected a Django app
-Creating app in ~/django-existing-app
-We're about to launch your Django app on Fly.io. Here's what you're getting:
 
-Organization: Jane Smith             (fly launch defaults to the personal org)
-Name:         django-existing-app    (derived from your directory name)
-Region:       Ashburn, Virginia (US) (this is the fastest region for you)
-App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
-Postgres:     <none>                 (not requested)
-Redis:        <none>                 (not requested)
+You'll get a summary of the defaults chosen for your app, including a Managed Postgres cluster on the Basic plan, and the launcher asks whether you want to tweak these settings. Type `y` to open the Fly Launch page and change the app name or region, or `n` to accept the defaults.
 
-? Do you want to tweak these settings before proceeding? Yes
-Opening https://fly.io/cli/launch/mo1ootho9ualooghoch3iih6cha2shah ...
+Once you confirm your settings, the launcher will:
 
-Waiting for launch data... Done
-Created app 'django-existing-app' in organization 'personal'
-Admin URL: https://fly.io/apps/django-existing-app
-Hostname: django-existing-app.fly.dev
-Set secrets on django-existing-app: SECRET_KEY
-Creating postgres cluster in organization personal
-Creating app...
-Setting secrets on app django-existing-app-db...
-Provisioning 1 of 1 machines with image flyio/postgres-flex:15.3@sha256:44b698752cf113110f2fa72443d7fe452b48228aafbb0d93045ef1e3282360a6
-Waiting for machine to start...
-Machine 217811c53e0896 is created
-==> Monitoring health checks
-  Waiting for 217811c53e0896 to become healthy (started, 3/3)
+* Create the Managed Postgres cluster, wait for it to be ready, and set the `DATABASE_URL` secret on your app
+* Set the `SECRET_KEY` secret
+* Generate a `Dockerfile` and `fly.toml` for your Django app
 
-Postgres cluster django-existing-app-db created
-  Username:    postgres
-  Password:    lt5JoEIVons5INJ
-  Hostname:    django-existing-app-db.flycast
-  Flycast:     fdaa:3:9f45:0:1::2
-  Proxy port:  5432
-  Postgres port:  5433
-  Connection string: postgres://postgres:lt5JoEIVons5INJ@django-existing-app-db.flycast:5432
-
-Save your credentials in a secure place -- you won't be able to see them again!
-
-Connect to postgres
-Any app within the Jane Smith organization can connect to this Postgres using the above connection string
-
-Now that you've set up Postgres, here's what you need to understand: https://fly.io/docs/postgres/getting-started/what-you-should-know/
-Checking for existing attachments
-Registering attachment
-Creating database
-Creating user
-
-Postgres cluster django-existing-app-db is now attached to django-existing-app
-The following secret was added to django-existing-app:
-  DATABASE_URL=postgres://django_existing_app:lt5JoEIVons5INJ@django-existing-app-db.flycast:5432/django_existing_app?sslmode=disable
-Postgres cluster django-existing-app-db is now attached to django-existing-app
-Wrote config file fly.toml
-
-[INFO] Python 3.10.12 was detected. 'python:3.10-slim-bullseye' image will be set in the Dockerfile.
-
-Validating ~/django-existing-app/fly.toml
-Platform: machines
-✓ Configuration is valid
-
-Your Django app is ready to deploy!
-
-For detailed documentation, see https://fly.dev/docs/django/
-```
-</CodeGroup>
+If your organization is on the [Free plan](/about/free-plan), `fly launch --db=mpg` can't create the cluster: launch uses the Basic plan, and the Free plan includes only the \$4 [Developer plan](/postgres/developer-plan). Instead, run `fly launch --no-db --no-deploy`, create a Developer plan cluster with `fly mpg create --plan dev-256`, [attach it](/postgres/create-and-connect) with `fly mpg attach <CLUSTER_ID>`, and then run `fly deploy`.
 
 ## Dockerfile and fly.toml
 
@@ -109,6 +51,53 @@ The [Dockerfile](https://docs.docker.com/engine/reference/builder/) is essential
 The [`fly.toml`](/reference/configuration) file is used by Fly.io to configure applications for deployment. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here.
 
 To run Celery workers next to your web process, with Redis as the broker, see [Background job queues](/blueprints/work-queues).
+
+### Complete fly.toml with Celery
+
+Gunicorn, a Celery worker and Celery beat each run in their own [process group](/launch/processes) in `fly.toml`. Here's a full `fly.toml` with Gunicorn serving web traffic, a Celery worker, Celery beat, Managed Postgres and Upstash Redis. Replace `my_app` with your project's module name:
+
+```toml
+app = "my-django-app"
+primary_region = "ord"
+
+[build]
+
+[deploy]
+  release_command = "python manage.py migrate"
+
+[processes]
+  app = "gunicorn --bind :8000 --workers 2 my_app.wsgi"
+  worker = "celery -A my_app worker -l info"
+  beat = "celery -A my_app beat -l info"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[vm]]
+  memory = "1gb"
+  cpu_kind = "shared"
+  cpus = 1
+```
+
+Postgres and Redis aren't `fly.toml` sections. Create them with flyctl, and your app gets their connection strings as the `DATABASE_URL` and `REDIS_URL` secrets:
+
+```bash
+fly mpg create --name my-django-db --region ord
+fly mpg attach <CLUSTER_ID> --app my-django-app
+fly redis create --name my-django-redis --region ord
+fly secrets set REDIS_URL="<URL printed by fly redis create>" --app my-django-app
+fly deploy
+```
+
+- `fly mpg list` shows the cluster ID. See [Managed Postgres](/postgres) for plans.
+- Point Celery's broker at `REDIS_URL`, for example `CELERY_BROKER_URL = os.environ["REDIS_URL"]` in `settings.py`.
+- Run one `beat` Machine so each scheduled task runs once: `fly scale count beat=1`. Remove the `beat` line if you don't have scheduled tasks.
+- Set `internal_port` to the port Gunicorn binds to.
 
 ## ALLOWED_HOSTS & CSRF\_TRUSTED_ORIGINS {#allowedhosts-amp-csrf_trustedorigins}
 The dedicated URL for your deployment will be `<app_name>.fly.dev`. Update the [ALLOWED_HOSTS](https://docs.djangoproject.com/en/stable/ref/settings/#allowed-hosts) and [CSRF\_TRUSTED\_ORIGINS](https://docs.djangoproject.com/en/stable/ref/settings/#csrf-trusted-origins) configurations with your `<app_name>` to include it.
@@ -176,7 +165,9 @@ This also means that `.gitignore` files are not ignored. If you have secrets or 
 
 ### Databases
 
-Fly.io has a [Postgres offering](/unmanaged-postgres) to automate provisioning, maintenance, and snapshot tasks for your Postgres database, but it does not manage it. If you run out of disk space, RAM, or other resources on your Fly Postgres instances, you'll have to scale those virtual machines from the Fly CLI. If you prefer, you can instead connect to an [external fully-managed Postgres database](/postgres).
+[Managed Postgres](/postgres) runs your Postgres cluster for you, with high availability, automatic failover and backups on every plan. If you didn't create a database at launch, create one with `fly mpg create`, find the cluster ID with `fly mpg list`, and attach it with `fly mpg attach <CLUSTER_ID>`. This sets the `DATABASE_URL` secret on your app.
+
+If you still run an older Fly Postgres app, which isn't managed, you [manage it yourself](/unmanaged-postgres), including scaling its Machines when it runs out of disk or memory.
 
 ### Custom Domain & SSL Certificates {#custom-domain-amp-ssl-certificates}
 
