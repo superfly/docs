@@ -1,0 +1,129 @@
+---
+title: Run pg_pinecone on Fly.io
+description: "Run pg_pinecone on Fly.io from the official image: a volume, a password, and the same SQL as pgvector."
+source_url: https://fly.io/docs/app-guides/pg-pinecone/
+---
+
+[pg_pinecone](https://github.com/pinecone-io/pg_pinecone) is a Postgres extension for vector search. It runs inside the database you already have, and you query it with the same SQL as [pgvector](https://github.com/pgvector/pgvector). A filter, such as a tenant id, is applied while the search runs, and the rows stay in Postgres.
+
+This guide runs the official image, [`pineconeteam/pg_pinecone`](https://hub.docker.com/r/pineconeteam/pg_pinecone). The `pg18` tag is Postgres 18 with pgvector and pg_pinecone installed. The [pg_pinecone docs](https://docs.pinecone.io/guides/pg-pinecone/overview) cover the SQL.
+
+## Create the app
+
+```bash
+mkdir my-pg-pinecone
+cd my-pg-pinecone
+
+# --no-deploy, because the config below has to be in place before the first boot
+fly launch --no-deploy --image pineconeteam/pg_pinecone:pg18
+```
+
+Type `y` when asked to tweak the settings.
+
+- Name the app. Other apps in your organization reach it at that name plus `.internal`, such as `my-pg-pinecone.internal`.
+- Give the Machine 2GB of memory.
+
+Confirm the settings and return to the terminal.
+
+## Configure the app
+
+Create a volume. Without one, the data directory is lost on the next deploy.
+
+```bash
+fly volumes create pgdata --size 10
+```
+
+Set the password the image uses for the `postgres` user. Save it. `fly secrets` will not show it again.
+
+```bash
+fly secrets set POSTGRES_PASSWORD=your-password
+```
+
+Edit the `fly.toml` that `fly launch` wrote.
+
+```toml
+# Keep the app name and region that fly launch chose.
+app = 'my-pg-pinecone'
+primary_region = 'iad'
+
+[build]
+  image = 'pineconeteam/pg_pinecone:pg18'
+
+[[vm]]
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 2048
+
+# Overrides the image CMD. The shell writes the extension SQL, then
+# starts Postgres through the image entrypoint.
+[processes]
+  app = '''/bin/sh -c "unset PGHOST PGPORT; mkdir -p /docker-entrypoint-initdb.d; echo 'CREATE EXTENSION IF NOT EXISTS vector;' > /docker-entrypoint-initdb.d/00-pg-pinecone.sql; echo 'CREATE EXTENSION IF NOT EXISTS pg_pinecone;' >> /docker-entrypoint-initdb.d/00-pg-pinecone.sql; exec docker-entrypoint.sh postgres -c shared_preload_libraries=pg_pinecone"'''
+
+[mounts]
+  source = 'pgdata'
+  destination = '/var/lib/postgresql'
+
+[env]
+  POSTGRES_USER = 'postgres'
+  POSTGRES_DB = 'postgres'
+```
+
+Delete the `[[http_service]]` block, including everything under it. This app is a database, and other apps reach it on the private network.
+
+<Note>
+Mount the volume at `/var/lib/postgresql`. Postgres 18 keeps its data in a subdirectory of that path. Mounting `/var/lib/postgresql/data` leaves the data directory off the volume.
+</Note>
+
+The x86_64 build needs a CPU with x86-64-v3. If the Machine logs an illegal instruction and exits, deploy the app in another region.
+
+## Deploy
+
+```bash
+fly deploy
+```
+
+The first boot creates the `vector` and `pg_pinecone` extensions. The database user in `[env]` has to be allowed to create them. The `postgres` user is.
+
+Another app in the same organization connects to `my-pg-pinecone.internal` on port 5432, with the user, database, and password from above.
+
+## Connect from your machine
+
+`fly proxy` forwards a local port to the app. Use another local port if 5432 is already taken.
+
+```bash
+fly proxy 15432:5432 -a my-pg-pinecone
+```
+
+```bash
+psql "postgres://postgres:your-password@localhost:15432/postgres"
+```
+
+A search is ordinary pgvector SQL. The `native` index is the default.
+
+```sql
+CREATE TABLE items (
+  id bigint PRIMARY KEY,
+  embedding vector(3)
+);
+
+INSERT INTO items (id, embedding) VALUES
+  (1, '[0.1, 0.1, 0.9]'),
+  (4, '[0.95, 0.05, 0.05]');
+
+SELECT pinecone.create_index('items', 'embedding', engine => 'native');
+
+SELECT id
+FROM items
+ORDER BY embedding <=> '[1, 0, 0]'
+LIMIT 1;
+```
+
+## Backups
+
+Fly snapshots the volume every day and keeps five days of snapshots.
+
+```bash
+fly volumes list -a my-pg-pinecone
+fly volumes snapshots list vol_xxx
+fly volumes create --snapshot-id vs_xxx --size 10
+```
