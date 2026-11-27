@@ -139,6 +139,25 @@ First, keys marked with a TTL will be evicted at random. In the absence of volat
 
 Note that items marked with an explicit TTL will expire accurately, regardless of whether eviction is enabled.
 
+### Supported Redis features {#supported-redis-features}
+
+Upstash Redis supports the Redis commands most apps use, including pub/sub and keyspace notifications. For the full list, see Upstash's [Redis compatibility](https://upstash.com/docs/redis/overall/rediscompatibility) page.
+
+**Pub/sub** works with `SUBSCRIBE`, `PSUBSCRIBE` and `PUBLISH` from any Redis client. The Fly.io [deep dive demo app](/deep-dive/redis) uses it.
+
+**Keyspace notifications** are off by default. Turn them on with `CONFIG SET notify-keyspace-events`, using only the event flags your app needs, because each notification adds some latency to the commands that trigger it. For example, to get events for expired keys:
+
+```bash
+fly redis connect
+127.0.0.1:16379> config set notify-keyspace-events Ex
+OK
+127.0.0.1:16379> config get notify-keyspace-events
+```
+
+Then subscribe to `__keyevent@0__:expired` (or `__keyspace@0__:yourkey` for events on one key) from your app. Upstash lists every flag in [Listen keyspace notifications](https://upstash.com/docs/redis/howto/keyspacenotifications).
+
+If your app needs a Redis feature that Upstash doesn't support, you can run Redis or Valkey yourself on a Fly Machine with a [volume](/volumes/overview).
+
 ## Pricing
 
 Upstash offers a range of payment plans for different use cases.
