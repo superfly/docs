@@ -28,6 +28,8 @@ Fly.io has its own command-line utility for managing apps, [flyctl](/flyctl). If
 
 To configure and launch the app, use the command `fly launch` and follow the wizard. You can set a name for the app, choose a default region, launch and attach a Postgres database. You can also set up a Redis database though we will not be doing so in this example.
 
+If your app needs Redis later (for example, as a Celery broker), `fly redis create` provisions an [Upstash Redis](/upstash/redis) database in your Fly.io organization. Its usage is billed on your Fly.io bill, so you don't need a separate Redis provider.
+
 <CodeGroup>
 ```bash cmd
 fly launch

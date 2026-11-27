@@ -10,6 +10,8 @@ Rails applications commonly defer complex tasks that take a long to complete to 
 
 Sidekiq depends on Redis to communicate between the Rails server process and the background workers. Follow the [Redis setup guide](/upstash/redis) to provision a Redis server and set a `REDIS_URL` within the Rails app. Be sure to set the `REDIS_URL` via a secret as demonstrated [here](/rails/the-basics/configuration#secret-variables).
 
+`fly redis create` provisions an [Upstash Redis](/upstash/redis) database in your Fly.io organization. Its usage is billed on your Fly.io bill, so you don't need a separate Redis provider.
+
 Verify the `REDIS_URL` is available to your Rails application before you continue by running:
 
 <CodeGroup>
